@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChloeOS.Business", "ChloeOS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChloeOS.DataAccess", "ChloeOS.DataAccess\ChloeOS.DataAccess.csproj", "{198974DA-B61D-42CB-8238-9B5DB3D669DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChloeOS.Domain", "ChloeOS.Domain\ChloeOS.Domain.csproj", "{029895CD-975F-45CB-8BBD-916008D7BCC8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{198974DA-B61D-42CB-8238-9B5DB3D669DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{198974DA-B61D-42CB-8238-9B5DB3D669DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{198974DA-B61D-42CB-8238-9B5DB3D669DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{029895CD-975F-45CB-8BBD-916008D7BCC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{029895CD-975F-45CB-8BBD-916008D7BCC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{029895CD-975F-45CB-8BBD-916008D7BCC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{029895CD-975F-45CB-8BBD-916008D7BCC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

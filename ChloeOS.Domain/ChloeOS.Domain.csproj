@@ -11,8 +11,4 @@
       <PackageReference Include="Ulid" Version="1.3.4" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\ChloeOS.Domain\ChloeOS.Domain.csproj" />
-    </ItemGroup>
-
 </Project>

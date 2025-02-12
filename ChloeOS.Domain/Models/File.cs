@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ChloeOS.Business.Models;
+namespace ChloeOS.Domain.Models;
 
 [Table("fs_files")]
 public class File {
