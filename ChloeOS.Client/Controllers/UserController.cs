@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
+using ChloeOS.Client.Models;
 using ChloeOS.Core.Models;
 using ChloeOS.Core.Contracts.DataAccess;
 using ChloeOS.Core.Models.Misc;
-using ChloeOS.Core.ViewModels;
 using Jane;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

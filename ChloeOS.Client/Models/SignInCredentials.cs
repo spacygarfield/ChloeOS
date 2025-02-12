@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ChloeOS.Core.ViewModels;
+namespace ChloeOS.Client.Models;
 
 public class SignInCredentials {
 
