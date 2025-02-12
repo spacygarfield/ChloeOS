@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ChloeOS.Core.Models.Misc;
 
-namespace ChloeOS.Domain.Models;
+namespace ChloeOS.Core.Models;
 
 [Table("os_users")]
 public class User {
@@ -27,11 +28,14 @@ public class User {
 
     [Required]
     [Column("password_hash")]
-    public string PasswordHash { get; set; }
+    private string PasswordHash { get; set; }
 
     [Required]
     [Column("password_salt")]
-    public string PasswordSalt { get; set; }
+    private string PasswordSalt { get; set; }
+
+    [NotMapped]
+    public Password Password => new (PasswordHash, PasswordSalt);
 
     [Required]
     [Column("created_at")]

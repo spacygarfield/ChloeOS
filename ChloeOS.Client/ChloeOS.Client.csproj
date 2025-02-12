@@ -19,7 +19,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ChloeOS.Business\ChloeOS.Business.csproj" />
       <ProjectReference Include="..\ChloeOS.DataAccess\ChloeOS.DataAccess.csproj" />
     </ItemGroup>
 

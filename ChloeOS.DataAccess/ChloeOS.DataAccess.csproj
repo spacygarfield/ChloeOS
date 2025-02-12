@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ChloeOS.Domain\ChloeOS.Domain.csproj" />
+      <ProjectReference Include="..\ChloeOS.Core\ChloeOS.Core.csproj" />
     </ItemGroup>
 
 </Project>

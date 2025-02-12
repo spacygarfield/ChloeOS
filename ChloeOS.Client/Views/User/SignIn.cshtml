@@ -1,0 +1,14 @@
+﻿@model SignInCredentials
+
+<form asp-action="SignIn" asp-controller="User">
+    @Html.AntiForgeryToken()
+
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <input asp-for="Username" />
+    <span asp-validation-for="Username"></span>
+    <input asp-for="Password" />
+    <span asp-validation-for="Password"></span>
+
+    <button type="submit">Sign In</button>
+</form>
