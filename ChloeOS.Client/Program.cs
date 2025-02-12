@@ -1,14 +1,26 @@
-var builder = WebApplication.CreateBuilder(args);
+using ChloeOS.Client.Database;
+using ChloeOS.DataAccess.Contexts;
+using Microsoft.EntityFrameworkCore;
 
-// Add services to the container.
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+#region Services
+
 builder.Services.AddControllersWithViews();
 
-var app = builder.Build();
+// Database connection.
+string connectionString = builder.Configuration.GetConnectionString("OSDB")!;
+builder.Services.AddDbContext<FileSystemContext>(options => options.UseMySQL(connectionString));
+builder.Services.AddDbContext<OperatingSystemContext>(options => options.UseMySQL(connectionString));
 
-// Configure the HTTP request pipeline.
+#endregion
+
+WebApplication app = builder.Build();
+
+#region Middlewares
+
 if (!app.Environment.IsDevelopment()) {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -23,4 +35,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+#endregion
+
+await app.RunAsync();
