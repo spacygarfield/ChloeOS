@@ -1,5 +1,10 @@
-# Chloe OS | A fun and creative "operating system"
-### by Spacy_Garfield
+<p align="center">
+  <img src="chloe.png" />
+</p>
+
+<h1 align="center">Chloe OS | A fun and creative "operating system"</h1>
+
+### 🧑‍🦰 by Spacy_Garfield
 
 Last Updated: 11-02-25
 
