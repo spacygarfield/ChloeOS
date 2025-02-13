@@ -16,14 +16,61 @@
 <body>
     <header>
         <nav id="task-bar" class="ui menu">
-            <a class="item" asp-action="SignIn" asp-controller="User" id="start">
-                <button class="ui button">
+            <div id="start" class="ui top left pointing dropdown item">
+                <button class="ui button" onclick="$(this).parent().dropdown({clearable: true})">
                     <img src="~/images/pawprint.png"
                          alt="Cat Paw Print"
                          longdesc="Pet icons created by Freepik - Flaticon"
                     />
                 </button>
-            </a>
+                <div class="menu">
+                    <div class="item">
+                        <i class="dropdown icon"></i>
+                        <span class="text">Applications</span>
+                        <div class="menu">
+                            <div class="item">
+                                <i class="file code icon"></i>
+                                PawEdit
+                            </div>
+                            <div class="item">
+                                <i class="terminal icon"></i>
+                                Terminal
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="dropdown icon"></i>
+                        <span class="text">Tools</span>
+                        <div class="menu">
+                            <div class="item">
+                                <i class="users icon"></i>
+                                Users
+                            </div>
+                            <div class="item">
+                                <i class="terminal icon"></i>
+                                Terminal
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui divider"></div>
+                    <div class="item">Settings</div>
+                    <div class="item">
+                        <i class="dropdown icon"></i>
+                        <span class="text">Shutdown / Sign-Out</span>
+                        <div class="menu">
+                            <div class="item">
+                                <i class="sign-out icon"></i>
+                                Sign-Out
+                            </div>
+                            <div class="item">
+                                <i class="power off icon"></i>
+                                Shutdown
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item" data-settings="about">About Chloe OS</div>
+                </div>
+            </div>
             <aside id="tray-icons" class="right menu">
                 <div class="item">
                     <i class="wifi icon"></i>
