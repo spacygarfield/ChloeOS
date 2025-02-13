@@ -25,7 +25,7 @@ WebApplication app = builder.Build();
 #region Middlewares
 
 if (!app.Environment.IsDevelopment()) {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Desktop/Error");
     app.UseHsts();
 }
 
@@ -36,9 +36,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute("default", "{controller=Desktop}/{action=Index}/{id?}");
 
 #endregion
 

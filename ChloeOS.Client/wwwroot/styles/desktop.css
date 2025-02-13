@@ -1,0 +1,125 @@
+﻿:root {
+    /* Wallpaper settings */
+    --desktop-wallpaper: url(../images/defaults/wallpapers/mbr454ps.png);
+    --desktop-repeat: repeat;
+    --desktop-fit: cover;
+
+    /* Selection rectangle settings */
+    --rect-colour: 254,145,27;
+    --rect-width: 0;
+    --rect-height: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column-reverse;
+    /*background: #000;*/
+    overflow: hidden;
+}
+
+#desktop {
+    padding: 1rem;
+    flex: 1;
+    display: grid;
+    grid-template-rows: repeat(auto-fill, minmax(60px, 85px));
+    grid-template-columns: repeat(auto-fill, minmax(60px, 85px));
+    justify-content: center;
+    align-items: center;
+    background-image: var(--desktop-wallpaper);
+    background-repeat: var(--desktop-repeat);
+    background-size: var(--desktop-fit);
+    background-position: center;
+    background-attachment: fixed;
+
+    .file {
+        width: 100%;
+        aspect-ratio: 1;
+        padding: .5rem;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        & > .icon {
+            flex: 1;
+            width: 100%;
+            font-size: 2.5rem;
+            line-height: 1.5;
+        }
+    }
+}
+
+#task-bar {
+    position: relative;
+    z-index: 2;
+    border: none;
+    border-radius: 0;
+    margin-bottom: -1px;
+
+    & > .item {
+        width: 5%;
+        height: fit-content;
+        min-width: 40px;
+        max-width: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+
+        &#start {
+            width: 50px !important;
+
+            button {
+                margin: 0;
+                width: 100%;
+                aspect-ratio: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 1px solid transparent;
+                border-radius: 0;
+
+                &:hover {
+                    border-color: #aaa;
+                }
+            }
+        }
+
+        img {
+            max-width: 30px;
+            text-align: center;
+        }
+    }
+}
+
+#tray-icons {
+    & > .item {
+        border: none !important;
+        padding: .5rem;
+
+        .icon {
+            margin: 0;
+            width: fit-content;
+        }
+
+        &::before {
+            display: none;
+        }
+    }
+}
+
+#system-clock {
+    letter-spacing: 1pt;
+}
+
+#selection-rect {
+    position: absolute;
+    width: calc(var(--rect-width) * 1px);
+    height: calc(var(--rect-height) * 1px);
+    z-index: 4;
+    border: 1px solid rgb(var(--rect-colour));
+    background-color: rgba(var(--rect-colour), .5);
+
+    &.hidden {
+        display: none;
+    }
+}

@@ -65,7 +65,7 @@ public class UserController : Controller {
 
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, properties);
 
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "Desktop");
     }
 
 }

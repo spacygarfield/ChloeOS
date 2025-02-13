@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Chloe OS</title>
+    <link rel="icon" href="/" />
+    <link rel="stylesheet" href="~/lib/semantic/semantic.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/styles/main.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/styles/desktop.css" asp-append-version="true"/>
+    <script defer src="~/lib/jquery/jquery-3.7.1.min.js"></script>
+    <script defer src="~/lib/semantic/semantic.min.js"></script>
+    <script defer src="~/scripts/main.js"></script>
+    <script defer src="~/scripts/desktop.js"></script>
+</head>
+<body>
+    <header>
+        <nav id="task-bar" class="ui menu">
+            <a class="item" asp-action="SignIn" asp-controller="User" id="start">
+                <button class="ui button">
+                    <img src="~/images/pawprint.png"
+                         alt="Cat Paw Print"
+                         longdesc="Pet icons created by Freepik - Flaticon"
+                    />
+                </button>
+            </a>
+            <aside id="tray-icons" class="right menu">
+                <div class="item">
+                    <i class="wifi icon"></i>
+                </div>
+                <div class="item">
+                    <small id="system-clock"></small>
+                </div>
+            </aside>
+        </nav>
+    </header>
+    <main role="main" id="desktop">
+        @RenderBody()
+    </main>
+</body>
+</html>
