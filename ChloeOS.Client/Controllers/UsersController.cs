@@ -11,11 +11,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ChloeOS.Client.Controllers;
 
-public class UserController : Controller {
+[Route("user")]
+public class UsersController : Controller {
 
     private readonly IUserRepository _userRepository;
 
-    public UserController(IUserRepository userRepository) => _userRepository = userRepository;
+    public UsersController(IUserRepository userRepository) => _userRepository = userRepository;
 
     [HttpGet]
     [AllowAnonymous]
