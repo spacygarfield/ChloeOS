@@ -63,38 +63,6 @@ public class UserController : Controller {
             IssuedUtc = DateTime.UtcNow,
         };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, properties);
 
         return RedirectToAction("Index", "Home");
