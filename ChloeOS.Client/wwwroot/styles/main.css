@@ -23,3 +23,7 @@ html {
 @view-transition {
   navigation: auto;
 }
+
+.hidden {
+  display: none !important;
+}

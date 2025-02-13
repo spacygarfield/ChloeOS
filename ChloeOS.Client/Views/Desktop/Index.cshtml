@@ -1,3 +1,16 @@
 ﻿<partial name="_File" model="new File()" />
 
 <div id="selection-rect" class="hidden"></div>
+
+<template id="window-template">
+    <section class="window" onmousedown="dragStartWindow(event)">
+        <nav class="ui top attached menu">
+            <aside class="right menu">
+                <button class="ui red icon button item" onclick="closeWindow($(this).closest(`.window`))">
+                    <i class="times icon"></i>
+                </button>
+            </aside>
+        </nav>
+        <iframe class="ui bottom attached menu"></iframe>
+    </section>
+</template>
