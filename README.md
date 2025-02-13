@@ -6,7 +6,7 @@
 
 ### 🧑‍🦰 by Spacy_Garfield
 
-Last Updated: 11-02-25
+Last Updated: 12-02-25
 
 ## Introduction
 Chloe OS is a fun and creative "operating system" that is used not only as a neat "nice-have" for anyone to try, but also served as the "ultimate test" of my 3+ years of programming skills. The inspiration for this project comes from a couple of different sources:
@@ -23,6 +23,20 @@ This project will use the following technologies:
 - 🤵 Semantic UI (used as additional "professional-looking" UI design);
 
 ** More may be added in the future... who knows..?
+
+## Planned Features
+Of course, this project has a bunch of features that I am planning (or at the very least considering) to implement, as much as I can. Those features include, but might not be limited to:
+- [x] User authentication (local accounts, password hashing);
+- [ ] Desktop environment (with default stylization possibilities):
+  - [ ] Colour selection;
+  - [ ] Desktop wallpaper selection;
+  - [ ] Font-size selection;
+- [ ] Setup flow (just like Windows' own OOBE setup flow, but in my own style);
+- [ ] Network adapter (the Wi-Fi adapter might be the same as the one that the machine running this "OS" is connected on);
+- [ ] Draggable windows;
+- [ ] A simple file system with files and folders;
+- [ ] A very-basic command-line;
+Etc. Etc. ETC.!
 
 ## What's next?
 For now, this project has barely been started. Of course, in the near future (hopefully...), there will be many other files to be used and instructions for you to try locally!
