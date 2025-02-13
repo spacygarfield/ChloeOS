@@ -3,18 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ChloeOS.Core.Models;
 
-[Table("fs_files")]
 public class File {
 
     [Key]
-    [Column("id")]
-    public Ulid Id { get; set; } = Ulid.NewUlid();
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     [ForeignKey(nameof(FileMetadata))]
-    [Column("metadata_id")]
-    public Ulid FileMetadataId { get; set; }
+    public Guid FileMetadataId { get; set; }
 
-    [Column("bytes")]
     public byte[] Bytes { get; set; } = [];
 
 

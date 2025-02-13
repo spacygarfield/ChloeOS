@@ -1,4 +1,3 @@
-using ChloeOS.Client.Database;
 using ChloeOS.Core.Contracts.DataAccess;
 using ChloeOS.DataAccess.Contexts;
 using ChloeOS.DataAccess.Repositories;
@@ -12,8 +11,8 @@ builder.Services.AddControllersWithViews();
 
 // Database connection.
 string connectionString = builder.Configuration.GetConnectionString("OSDB")!;
-builder.Services.AddDbContext<FileSystemContext>(options => options.UseMySQL(connectionString));
-builder.Services.AddDbContext<OperatingSystemContext>(options => options.UseMySQL(connectionString));
+builder.Services.AddDbContext<FileSystemContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<OperatingSystemContext>(options => options.UseSqlServer(connectionString));
 
 // Database access repositories.
 builder.Services.AddScoped<IUserRepository, UserRepository>();

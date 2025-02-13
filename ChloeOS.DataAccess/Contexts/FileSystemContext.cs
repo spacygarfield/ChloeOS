@@ -11,12 +11,10 @@ public class FileSystemContext : DbContext {
 
     public FileSystemContext(DbContextOptions<FileSystemContext> options) : base(options) { }
 
-    protected override void ConfigureConventions(ModelConfigurationBuilder builder) {
-        builder
-            .Properties<Ulid>()
-            .HaveConversion<UlidToStringConverter>();
+    protected override void OnModelCreating(ModelBuilder builder) {
+        builder.HasDefaultSchema("fs");
 
-        base.ConfigureConventions(builder);
+        base.OnModelCreating(builder);
     }
 
 }

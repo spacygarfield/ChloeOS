@@ -1,8 +1,7 @@
 ﻿using ChloeOS.Core.Models;
-using ChloeOS.DataAccess;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChloeOS.Client.Database;
+namespace ChloeOS.DataAccess.Contexts;
 
 public class OperatingSystemContext : DbContext {
 
@@ -10,12 +9,10 @@ public class OperatingSystemContext : DbContext {
 
     public OperatingSystemContext(DbContextOptions<OperatingSystemContext> options) : base(options) { }
 
-    protected override void ConfigureConventions(ModelConfigurationBuilder builder) {
-        builder
-            .Properties<Ulid>()
-            .HaveConversion<UlidToStringConverter>();
+    protected override void OnModelCreating(ModelBuilder builder) {
+        builder.HasDefaultSchema("os");
 
-        base.ConfigureConventions(builder);
+        base.OnModelCreating(builder);
     }
 
 }
