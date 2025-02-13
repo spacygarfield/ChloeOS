@@ -44,8 +44,8 @@ public class UserController : Controller {
         User user = getUserResult.Value;
 
         // Hash password and compare if it is right.
-        Password signInPassword = Password.GenerateHash(credentials.Password?.Trim());
-        if (!user.Password.Verify(signInPassword)) {
+        Password userPassword = (Password) user;
+        if (!userPassword.VerifyHash(credentials.Password)) {
             ModelState.AddModelError(nameof(SignInCredentials.Password), "The password is incorrect. Please try again.");
             return View(credentials);
         }
@@ -62,6 +62,39 @@ public class UserController : Controller {
             IsPersistent = true,
             IssuedUtc = DateTime.UtcNow,
         };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, properties);
 
         return RedirectToAction("Index", "Home");

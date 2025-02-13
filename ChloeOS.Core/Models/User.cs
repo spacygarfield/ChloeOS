@@ -28,17 +28,19 @@ public class User {
 
     [Required]
     [Column("password_hash")]
-    private string PasswordHash { get; set; }
+    public string PasswordHash { get; set; }
 
     [Required]
     [Column("password_salt")]
-    private string PasswordSalt { get; set; }
-
-    [NotMapped]
-    public Password Password => new (PasswordHash, PasswordSalt);
+    public string PasswordSalt { get; set; }
 
     [Required]
     [Column("created_at")]
     public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+    public void SetPassword(Password password) {
+        PasswordHash = Convert.ToBase64String(password.Hash);
+        PasswordSalt = Convert.ToBase64String(password.Salt);
+    }
 
 }
