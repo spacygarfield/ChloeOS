@@ -1,7 +1,7 @@
-﻿using ChloeOS.Core.Models;
+﻿using ChloeOS.Core.Models.OS;
 using Jane;
 
-namespace ChloeOS.Core.Contracts.DataAccess;
+namespace ChloeOS.Core.Contracts.DataAccess.OS;
 
 public interface IUserRepository {
 

@@ -1,4 +1,4 @@
-﻿using ChloeOS.Core.Models;
+﻿using ChloeOS.Core.Models.OS;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChloeOS.DataAccess.Contexts;

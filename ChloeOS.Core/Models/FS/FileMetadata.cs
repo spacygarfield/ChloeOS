@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ChloeOS.Core.Models.OS;
 
-namespace ChloeOS.Core.Models;
+namespace ChloeOS.Core.Models.FS;
 
 public class FileMetadata {
 

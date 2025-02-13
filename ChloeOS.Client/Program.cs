@@ -1,6 +1,6 @@
-using ChloeOS.Core.Contracts.DataAccess;
+using ChloeOS.Core.Contracts.DataAccess.OS;
 using ChloeOS.DataAccess.Contexts;
-using ChloeOS.DataAccess.Repositories;
+using ChloeOS.DataAccess.Repositories.OS;
 using Microsoft.EntityFrameworkCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);

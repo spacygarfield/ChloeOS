@@ -1,10 +1,10 @@
-﻿using ChloeOS.Core.Contracts.DataAccess;
-using ChloeOS.Core.Models;
+﻿using ChloeOS.Core.Contracts.DataAccess.OS;
+using ChloeOS.Core.Models.OS;
 using ChloeOS.DataAccess.Contexts;
 using Jane;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChloeOS.DataAccess.Repositories;
+namespace ChloeOS.DataAccess.Repositories.OS;
 
 public class UserRepository : IUserRepository {
 

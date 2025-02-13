@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using ChloeOS.Core.Models.Misc;
 
-namespace ChloeOS.Core.Models;
+namespace ChloeOS.Core.Models.OS;
 
 public class User {
 

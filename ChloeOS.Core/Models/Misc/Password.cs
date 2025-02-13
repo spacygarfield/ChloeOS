@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using ChloeOS.Core.Models.OS;
 
 namespace ChloeOS.Core.Models.Misc;
 

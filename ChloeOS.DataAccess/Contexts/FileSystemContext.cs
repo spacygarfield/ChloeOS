@@ -1,6 +1,6 @@
-﻿using ChloeOS.Core.Models;
+﻿using ChloeOS.Core.Models.FS;
 using Microsoft.EntityFrameworkCore;
-using File = ChloeOS.Core.Models.File;
+using File = ChloeOS.Core.Models.FS.File;
 
 namespace ChloeOS.DataAccess.Contexts;
 
