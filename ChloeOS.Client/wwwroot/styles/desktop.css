@@ -3,6 +3,7 @@
     --layer-task-bar: 10;
     --layer-select: 3;
     --layer-win: 5;
+    --layer-welcome: 50;
 
     /* Wallpaper settings */
     --desktop-wallpaper: url(../images/defaults/wallpapers/mbr454ps.png);
@@ -32,6 +33,33 @@ body {
     flex-direction: column-reverse;
     /*background: #000;*/
     overflow: hidden;
+}
+
+#welcome {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: var(--layer-welcome);
+    pointer-events: none;
+    animation: welcome 1.5s forwards 3s;
+
+    & > * {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        gap: 1rem;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(5px);
+
+        * {
+            margin: 0;
+            text-shadow: 2px 2px 0 #fff;
+        }
+    }
 }
 
 #desktop {
@@ -175,4 +203,9 @@ body {
     iframe {
         flex: 1;
     }
+}
+
+@keyframes welcome {
+    0%, 50% { opacity: 1; }
+    to { opacity: 0; }
 }
