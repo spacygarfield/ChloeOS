@@ -1,4 +1,9 @@
 ﻿:root {
+    /* Layers */
+    --layer-task-bar: 10;
+    --layer-select: 3;
+    --layer-win: 5;
+
     /* Wallpaper settings */
     --desktop-wallpaper: url(../images/defaults/wallpapers/mbr454ps.png);
     --desktop-repeat: repeat;
@@ -54,11 +59,28 @@ body {
             line-height: 1.5;
         }
     }
+
+    .selected {
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            translate: -50% -50%;
+            width: 90%;
+            aspect-ratio: 1;
+            z-index: var(--layer-select);
+            border: 1px solid rgb(var(--rect-colour));
+            background-color: rgba(var(--rect-colour), .5);
+        }
+    }
 }
 
 #task-bar {
     position: relative;
-    z-index: 2;
+    z-index: var(--layer-task-bar);
     border: none;
     border-radius: 0;
     margin-bottom: -1px;
@@ -123,13 +145,14 @@ body {
     position: absolute;
     width: calc(var(--rect-width) * 1px);
     height: calc(var(--rect-height) * 1px);
-    z-index: 4;
+    z-index: var(--layer-select);
     border: 1px solid rgb(var(--rect-colour));
     background-color: rgba(var(--rect-colour), .5);
 }
 
 .window {
     position: absolute;
+    z-index: var(--layer-win);
     resize: both;
     direction: ltr;
     min-width: calc(var(--win-min-width) * 1px);

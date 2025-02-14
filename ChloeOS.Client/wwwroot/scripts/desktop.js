@@ -95,6 +95,45 @@ function updateSystemClock() {
 }
 
 // -----------------------------------------------------------------------
+// Desktop Files and folders.
+
+const $files = $(`.files`);
+
+let $selectedFile;
+
+function selectFile(e) {
+    if ($selectedFile) {
+        return;
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    $selectedFile = $(e.currentTarget);
+    $selectedFile.addClass(`selected`);
+}
+
+function unselectFile(e) {
+    const $selected = $(e.currentTarget);
+
+    if (!$selectedFile || $selected.is($selectedFile) || $selected.hasClass(`file`)) {
+        return;
+    }
+
+    $selectedFile.removeClass(`selected`);
+    $selectedFile = undefined;
+}
+
+function openFile() {
+    if (!$selectedFile) {
+        return;
+    }
+
+    const uri = `/fs/${$selectedFile.attr(`data-file-id`)}`;
+    openWindow(uri);
+}
+
+// -----------------------------------------------------------------------
 // Window builder.
 
 const windowTemplate = $(`#window-template`)[0];
@@ -104,11 +143,15 @@ function openWindow(uri) {
         uri = `/error/404`;
     }
 
-    uri = window.encodeURIComponent(uri);
+    // Encode query parameters.
+    const [href, queryParams] = uri.split(`?`);
+    if (queryParams) {
+        uri = href + window.encodeURIComponent(queryParams);
+    }
 
     // Create window.
     let $window = $(windowTemplate.content.cloneNode(true));
-    let $iframe = $window.children().last();
+    let $iframe = $window.find(`iframe`);
     $iframe.attr(`src`, uri);
 
     // Add onto the desktop!
@@ -118,7 +161,7 @@ function openWindow(uri) {
     $window.css(`width`, $(document.documentElement).css(`--win-init-width`))
         .css(`height`, $(document.documentElement).css(`--win-init-height`))
 
-    $iframe = $window.children().last();
+    $iframe = $window.find(`iframe`);
     $iframe.attr(`src`, uri)
         .attr(`referrerpolicy`, `same-origin`);
 
@@ -147,7 +190,6 @@ function dragStartWindow(e) {
 }
 
 function dragWindow(e) {
-    console.log($draggedWindow)
     if (!$draggedWindow) {
         return;
     }
@@ -197,4 +239,12 @@ function openSettings() {
 function isSettingsOpen(uri) {
     const $window = $(`.window iframe[src="${uri}"]`);
     return !$window;
+}
+
+// -----------------------------------------------------------------------
+// Context menu.
+
+function openContextMenu(e) {
+    e.preventDefault();
+    console.log(`Opened context menu`);
 }
