@@ -8,6 +8,8 @@ public class FileSystemContext : DbContext {
 
     public DbSet<File> Files { get; set; }
     public DbSet<FileMetadata> FileMetadata { get; set; }
+    public DbSet<Folder> Folders { get; set; }
+    public DbSet<FolderMetadata> FolderMetadata { get; set; }
 
     public FileSystemContext(DbContextOptions<FileSystemContext> options) : base(options) { }
 

@@ -9,9 +9,14 @@ public class File {
     public Guid Id { get; set; } = Guid.NewGuid();
 
     [ForeignKey(nameof(FileMetadata))]
-    public Guid FileMetadataId { get; set; }
+    public Guid MetadataId { get; set; }
+
+    [ForeignKey(nameof(Folder))]
+    public Guid FolderId { get; set; }
 
     public byte[] Bytes { get; set; } = [];
 
+    public virtual FileMetadata Metadata { get; set; } = null!;
+    public virtual Folder Parent { get; set; } = null!;
 
 }

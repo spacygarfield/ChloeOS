@@ -4,7 +4,7 @@ using ChloeOS.Core.Models.OS;
 
 namespace ChloeOS.Core.Models.FS;
 
-public class FileMetadata {
+public class FolderMetadata {
 
     [Key]
     public Guid Id { get; set; } = Guid.NewGuid();
@@ -12,14 +12,11 @@ public class FileMetadata {
     [ForeignKey(nameof(User))]
     public Guid OwnerId { get; set; }
 
-    [Required(ErrorMessage = "A filename is required.")]
+    [Required(ErrorMessage = "A folder name is required.")]
     public string Name { get; set; }
 
     [NotMapped]
     public string FilePath { get; set; } // Will be generated via the attached file's relationships.
-
-    [Required]
-    public string FileExtension { get; set; }
 
     [Required]
     public DateTime CreatedAt { get; set; } = DateTime.Now;

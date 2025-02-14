@@ -1,5 +1,6 @@
 using ChloeOS.Core.Contracts.DataAccess.OS;
 using ChloeOS.DataAccess.Contexts;
+using ChloeOS.DataAccess.Repositories.FS;
 using ChloeOS.DataAccess.Repositories.OS;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<FileSystemContext>(options => options.UseSqlServer
 builder.Services.AddDbContext<OperatingSystemContext>(options => options.UseSqlServer(connectionString));
 
 // Database access repositories.
+builder.Services.AddScoped<IFolderRepository, FolderRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 #endregion
