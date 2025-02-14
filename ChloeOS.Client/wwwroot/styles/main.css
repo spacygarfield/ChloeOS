@@ -20,10 +20,19 @@ html {
   min-height: 100vh;
 }
 
-@view-transition {
-  navigation: auto;
-}
-
 .hidden {
   display: none !important;
+}
+
+.wallpaper {
+  background-image: var(--desktop-wallpaper);
+  background-repeat: var(--desktop-repeat);
+  background-size: var(--desktop-fit);
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.validation-summary-errors {
+  margin-top: .35rem;
+  margin-inline-start: 1.25rem;
 }

@@ -1,0 +1,33 @@
+﻿@model SignInCredentials
+
+<partial name="_ErrorMessage" />
+
+<form asp-action="User" asp-controller="SignOn" id="sign-in" class="ui form menu">
+    <div class="field">
+        <label asp-for="Password"></label>
+        <input asp-for="Password"></input>
+    </div>
+    <div class="inline fields">
+        <div class="input">
+            <a asp-action="Index" asp-controller="SignOn">
+                <button type="button" class="ui animated button" tabindex="0">
+                    <div class="visible content">Back</div>
+                    <div class="hidden content">
+                        <i class="undo alternate icon"></i>
+                    </div>
+                </button>
+            </a>
+        </div>
+
+        <div class="input">
+            <button type="submit" class="ui animated primary button" tabindex="0">
+                <div class="visible content">Sign In!</div>
+                <div class="hidden content">
+                    <i class="sign-in icon"></i>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <input asp-for="Username" type="hidden" />
+</form>

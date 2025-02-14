@@ -1,0 +1,56 @@
+﻿:root {
+    /* Wallpaper settings */
+    --desktop-wallpaper: url(../images/defaults/wallpapers/cncnzd29.png);
+    --desktop-repeat: repeat;
+    --desktop-fit: cover;
+
+    --main-width: 30vw;
+}
+
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-group(root) {
+    animation-duration: 100ms;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+    width: var(--main-width);
+}
+
+.negative.message {
+    position: absolute;
+    width: var(--main-width);
+    top: 1.75rem;
+    left: 50%;
+    translate: -50% 0;
+    animation: message-scroll 700ms ease-out forwards;
+}
+
+#sign-in {
+    padding: 1rem;
+    display: block !important;
+
+    & > :has(button) {
+        display: flex;
+        justify-content: flex-end;
+        gap: .25rem;
+        margin-bottom: 0;
+    }
+}
+
+label {
+    font-size: 1.1rem !important;
+    margin-bottom: 1rem !important;
+}
+
+@keyframes message-scroll {
+    0% { top: -10%; }
+}

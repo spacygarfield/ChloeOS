@@ -23,6 +23,10 @@
     --win-max-height: 960;
 }
 
+@view-transition {
+    navigation: auto;
+}
+
 body {
     display: flex;
     flex-direction: column-reverse;
@@ -38,11 +42,6 @@ body {
     grid-template-columns: repeat(auto-fill, minmax(60px, 85px));
     justify-content: center;
     align-items: center;
-    background-image: var(--desktop-wallpaper);
-    background-repeat: var(--desktop-repeat);
-    background-size: var(--desktop-fit);
-    background-position: center;
-    background-attachment: fixed;
 
     .file {
         width: 100%;

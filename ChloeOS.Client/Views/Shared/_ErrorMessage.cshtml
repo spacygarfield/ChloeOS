@@ -1,0 +1,20 @@
+﻿@{
+    ModelStateDictionary modelState = ViewContext.ModelState;
+    if (!modelState.IsValid) {
+        <div class="ui negative message">
+            <i class="close icon"
+               onclick="$(this).closest('.message').transition(`fade`).css(`pointer-events`, `none`)">
+            </i>
+            @{
+                IEnumerable<ModelError> errors = modelState.Values.SelectMany(v => v.Errors);
+                if (errors.Count() == 1) {
+                    <p class="header">An error has occured</p>
+                    <p>@errors.First().ErrorMessage</p>;
+                } else {
+                    <p class="header">Some errors have occured</p>
+                        <div asp-validation-summary="All"></div>
+                }
+            }
+        </div>
+    }
+}
