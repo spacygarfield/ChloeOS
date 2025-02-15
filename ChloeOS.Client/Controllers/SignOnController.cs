@@ -105,9 +105,10 @@ public class SignOnController : Controller {
 
         // Sign-In attempt.
         Claim[] claims = [
+            new (ClaimTypes.NameIdentifier, user.Id.ToString()),
             new (ClaimTypes.Name, user.FullName),
-            new (ClaimTypes.Surname, user.FirstName),
-            new (ClaimTypes.GivenName, user.LastName),
+            new (ClaimTypes.GivenName, user.FirstName),
+            new (ClaimTypes.Surname, user.LastName),
         ];
         ClaimsIdentity identity = new (claims, CookieAuthenticationDefaults.AuthenticationScheme);
         ClaimsPrincipal principal = new (identity);

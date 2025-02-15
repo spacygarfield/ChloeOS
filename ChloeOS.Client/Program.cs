@@ -58,11 +58,13 @@ builder.Services.AddAuthorization(options => {
 });
 
 // Database connection.
-string connectionString = builder.Configuration.GetConnectionString("OSDB")!;
-builder.Services.AddDbContext<FileSystemContext>(options => options.UseSqlServer(connectionString));
-builder.Services.AddDbContext<OperatingSystemContext>(options => options.UseSqlServer(connectionString));
+Action<DbContextOptionsBuilder> contextCallback = options
+    => options.UseSqlServer(builder.Configuration.GetConnectionString("OSDB")!);
+builder.Services.AddDbContext<FileSystemContext>(contextCallback);
+builder.Services.AddDbContext<OperatingSystemContext>(contextCallback);
 
 // Database access repositories.
+builder.Services.AddScoped<IFileRepository, FileRepository>();
 builder.Services.AddScoped<IFolderRepository, FolderRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 

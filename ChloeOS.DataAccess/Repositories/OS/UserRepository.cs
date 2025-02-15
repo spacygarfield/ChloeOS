@@ -16,7 +16,7 @@ public class UserRepository : IUserRepository {
         try {
             User[] users = await _os.Users.ToArrayAsync();
 
-            if (!users.Any()) {
+            if (users.Length == 0) {
                 return Result.Failure<User[]>("No local users exist yet. Why not be the first one?");
             }
 
@@ -40,25 +40,31 @@ public class UserRepository : IUserRepository {
     }
 
     public async Task<IResult<User>> CreateAsync(User user) {
-        await _os.Users.AddAsync(user);
+        try {
+            await _os.Users.AddAsync(user);
 
-        int savedCount = await _os.SaveChangesAsync();
-        if (savedCount == 0) {
+            int savedCount = await _os.SaveChangesAsync();
+            if (savedCount == 0) { }
+
+            return Result.Success(user);
+        } catch {
             return Result.Failure<User>("Unable to add the current user at the moment. Try again later.");
         }
-
-        return Result.Success(user);
     }
 
     public async Task<IResult<User>> UpdateAsync(User user) {
-        _os.Users.Update(user);
+        try {
+            _os.Users.Update(user);
 
-        int savedCount = await _os.SaveChangesAsync();
-        if (savedCount == 0) {
+            int savedCount = await _os.SaveChangesAsync();
+            if (savedCount == 0) {
+                throw new Exception();
+            }
+
+            return Result.Success(user);
+        } catch {
             return Result.Failure<User>("Unable to update the user's information. Try again later.");
         }
-
-        return Result.Success(user);
     }
 
 }

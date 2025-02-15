@@ -8,6 +8,7 @@ function openWindow(uri) {
     if (!isRouteAvailable(uri)) {
         uri = `/error/404`;
     }
+    uri = `/`;
 
     // Encode query parameters.
     const [href, queryParams] = uri.split(`?`);
@@ -35,9 +36,9 @@ function openWindow(uri) {
 
     // Verify that the page was loaded successfully.
     // Needs to have at least something in the body.
-    if ($iframe[0].contentWindow.location.href === `about:blank`) {
-        $iframe.attr(`src`, `/error/404`);
-    }
+    // if ($iframe[0].contentWindow.location.href === `about:blank`) {
+    //     $iframe.attr(`src`, `/error/404`);
+    // }
 }
 
 function closeWindow($window) {

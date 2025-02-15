@@ -1,11 +1,19 @@
-﻿<aside id="welcome" class="wallpaper">
+﻿@model DesktopContent
+
+<aside id="welcome" class="wallpaper">
     <div>
-        <h1>Welcome back, @User.FindFirstValue(ClaimTypes.Name)</h1>
+        <h1>Welcome back, @User.FindFirstValue(ClaimTypes.GivenName)</h1>
         <h2>Hope you are doing well, today! 😸</h2>
     </div>
 </aside>
 
-<partial name="_File" model="new File()" />
+@foreach (Folder folder in Model.Folders) {
+    <partial name="_Folder" model="@folder" />
+}
+
+@foreach (File file in Model.Files) {
+    <partial name="_File" model="@file" />
+}
 
 <div id="selection-rect" class="hidden"></div>
 

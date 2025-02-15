@@ -1,6 +1,6 @@
 ﻿$(`#desktop`).click(unselectFile);
 
-const $files = $(`.file`);
+const $files = $(`.file, .folder`);
 $files
     .click(selectFile)
     .on(`dblclick`, openFile);

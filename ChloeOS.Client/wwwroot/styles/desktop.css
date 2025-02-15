@@ -71,7 +71,7 @@ body {
     justify-content: center;
     align-items: center;
 
-    .file {
+    .file, .folder {
         width: 100%;
         aspect-ratio: 1;
         padding: .5rem;
@@ -82,9 +82,22 @@ body {
         & > .icon {
             flex: 1;
             width: 100%;
-            font-size: 2.5rem;
             line-height: 1.5;
+            pointer-events: none;
         }
+
+        & > small {
+            display: inline-flex;
+            justify-content: center;
+        }
+    }
+
+    .file > .icon.file {
+        font-size: 2rem;
+    }
+
+    .folder > .icon.folder {
+        font-size: 2.5rem;
     }
 
     .selected {
@@ -192,6 +205,7 @@ body {
     justify-content: center;
     align-items: center;
     user-select: none;
+    box-shadow: 8px 6px 5px rgba(64, 64, 64, .5);
 
     nav {
         height: 24px !important;
