@@ -101,6 +101,7 @@ body {
             z-index: var(--layer-select);
             border: 1px solid rgb(var(--rect-colour));
             background-color: rgba(var(--rect-colour), .5);
+            pointer-events: none;
         }
     }
 }

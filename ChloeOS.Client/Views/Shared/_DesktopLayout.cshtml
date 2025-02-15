@@ -11,15 +11,19 @@
     <script defer src="~/lib/jquery/jquery-3.7.1.min.js"></script>
     <script defer src="~/lib/semantic/semantic.min.js"></script>
     <script defer src="~/scripts/main.js"></script>
-    <script defer src="~/scripts/desktop.js"></script>
+    <script defer src="~/scripts/desktop/clock.js"></script>
+    <script defer src="~/scripts/desktop/contextmenu.js"></script>
+    <script defer src="~/scripts/desktop/files.js"></script>
+    <script defer src="~/scripts/desktop/selection.js"></script>
+    <script defer src="~/scripts/desktop/settings.js"></script>
+    <script defer src="~/scripts/desktop/welcome.js"></script>
+    <script defer src="~/scripts/desktop/window.js"></script>
 </head>
-<body onmousemove="dragWindow(event)"
-      onmouseup="dragEndWindow()"
-      oncontextmenu="openContextMenu(event)">
+<body>
     <header>
         <nav id="task-bar" class="ui menu">
             <div id="start" class="ui top left pointing dropdown item">
-                <button class="ui button" onclick="$(this).parent().dropdown({clearable: true})">
+                <button class="ui button" onclick="$(this).parent().dropdown({ clearable: true })">
                     <img src="~/images/pawprint.png"
                          alt="Cat Paw Print"
                          longdesc="Pet icons created by Freepik - Flaticon"
@@ -83,7 +87,7 @@
             </aside>
         </nav>
     </header>
-    <main role="main" id="desktop" class="wallpaper" onclick="unselectFile(event)" ondblclick="event.preventDefault()">
+    <main role="main" id="desktop" class="wallpaper" ondblclick="event.preventDefault()">
         @RenderBody()
     </main>
 </body>
