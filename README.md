@@ -18,7 +18,7 @@ Chloe OS is a fun and creative "operating system" that is used not only as a nea
 ## Technologies Used
 This project will use the following technologies:
 - 💻 C# MVC, .NET Core 8;
-- ☁️ Entity Framework Core 8 with a MySQL database connected;
+- ☁️ Entity Framework Core 8 with a Microsoft SQL Server database connected;
 - 🦴 HTML, CSS3, and JavaScript;
 - 🤵 Semantic UI (used as additional "professional-looking" UI design);
 
@@ -27,13 +27,13 @@ This project will use the following technologies:
 ## Planned Features
 Of course, this project has a bunch of features that I am planning (or at the very least considering) to implement, as much as I can. Those features include, but might not be limited to:
 - [x] User authentication (local accounts, password hashing);
-- [ ] Desktop environment (with default stylization possibilities):
+- [x] Desktop environment (with default stylization possibilities):
   - [ ] Colour selection;
   - [ ] Desktop wallpaper selection;
   - [ ] Font-size selection;
 - [ ] Setup flow (just like Windows' own OOBE setup flow, but in my own style);
 - [ ] Network adapter (the Wi-Fi adapter might be the same as the one that the machine running this "OS" is connected on);
-- [ ] Draggable windows;
+- [x] Draggable windows;
 - [ ] A simple file system with files and folders;
 - [ ] A very-basic command-line;
 Etc. Etc. ETC.!
