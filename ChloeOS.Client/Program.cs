@@ -65,7 +65,7 @@ builder.Services.AddDbContext<OperatingSystemContext>(contextCallback);
 
 // Database access repositories.
 builder.Services.AddScoped<IFileRepository, FileRepository>();
-builder.Services.AddScoped<IFolderRepository, FolderRepository>();
+builder.Services.AddScoped<IDirectoryRepository, DirectoryRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 #endregion

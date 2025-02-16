@@ -5,6 +5,7 @@ using ChloeOS.Core.Models.FS;
 using Jane;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Directory = ChloeOS.Core.Models.FS.Directory;
 
 namespace ChloeOS.Client.Controllers;
 
@@ -12,24 +13,24 @@ namespace ChloeOS.Client.Controllers;
 public class DesktopController : Controller {
 
     private readonly IFileRepository _fileRepository;
-    private readonly IFolderRepository _folderRepository;
+    private readonly IDirectoryRepository _directoryRepository;
 
-    public DesktopController(IFileRepository fileRepository, IFolderRepository folderRepository) {
+    public DesktopController(IFileRepository fileRepository, IDirectoryRepository directoryRepository) {
         _fileRepository = fileRepository;
-        _folderRepository = folderRepository;
+        _directoryRepository = directoryRepository;
     }
 
     [HttpGet]
     public async Task<IActionResult> Index() {
-        IResult<Folder[]> getRootFoldersResult = await _folderRepository.GetAllFromRootAsync();
+        IResult<Directory[]> getRootFoldersResult = await _directoryRepository.GetAllFromRootAsync();
         if (!getRootFoldersResult.Ok) {
             return StatusCode(StatusCodes.Status500InternalServerError, getRootFoldersResult.Reason);
         }
 
-        Folder? desktopFolder = getRootFoldersResult.Value.FirstOrDefault(
+        Directory? desktopDirectory = getRootFoldersResult.Value.FirstOrDefault(
             f => string.Equals(f.Name, "Desktop", StringComparison.CurrentCultureIgnoreCase)
         );
-        if (desktopFolder == null) {
+        if (desktopDirectory == null) {
             if (!Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out Guid ownerId)) {
                 return StatusCode(
                     StatusCodes.Status500InternalServerError,
@@ -37,25 +38,22 @@ public class DesktopController : Controller {
                 );
             }
             // Create it then!
-            desktopFolder = new Folder {
+            desktopDirectory = new Directory {
                 Name = "Desktop",
                 OwnerId = ownerId
             };
 
             // Attempt to create the folder.
-            IResult<Folder> createDesktopFolderResult = await _folderRepository.CreateAsync(desktopFolder);
-            if (!createDesktopFolderResult.Ok) {
-                return StatusCode(StatusCodes.Status500InternalServerError, createDesktopFolderResult.Reason);
+            IResult<Directory> createDesktopDirectoryResult = await _directoryRepository.CreateAsync(desktopDirectory);
+            if (!createDesktopDirectoryResult.Ok) {
+                return StatusCode(StatusCodes.Status500InternalServerError, createDesktopDirectoryResult.Reason);
             }
 
-            desktopFolder = createDesktopFolderResult.Value;
+            desktopDirectory = createDesktopDirectoryResult.Value;
         }
 
         // Get files from the "Desktop" folder.
-        DesktopContent content = new () {
-            Files = desktopFolder.SubFiles.ToArray(),
-            Folders = desktopFolder.SubFolders.ToArray()
-        };
+        BrowsableContent content = (BrowsableContent) desktopDirectory;
         return View(content);
     }
 

@@ -13,11 +13,11 @@
     <script defer src="~/scripts/main.js"></script>
     <script defer src="~/scripts/desktop/clock.js"></script>
     <script defer src="~/scripts/desktop/contextmenu.js"></script>
-    <script defer src="~/scripts/desktop/files.js"></script>
     <script defer src="~/scripts/desktop/selection.js"></script>
-    <script defer src="~/scripts/desktop/settings.js"></script>
+    <script defer src="~/scripts/desktop/taskbar.js"></script>
     <script defer src="~/scripts/desktop/welcome.js"></script>
     <script defer src="~/scripts/desktop/window.js"></script>
+    <script defer src="~/scripts/desktop/files.js"></script>
 </head>
 <body>
     <header>
@@ -35,10 +35,10 @@
                         <span class="text">Applications</span>
                         <div class="menu">
                             <div class="item">
-                                <i class="file code icon"></i>
+                                <i class="file code icon" data-window-href="/app/pawedit"></i>
                                 PawEdit
                             </div>
-                            <div class="item">
+                            <div class="item" data-window-href="/app/terminal">
                                 <i class="terminal icon"></i>
                                 Terminal
                             </div>
@@ -49,12 +49,12 @@
                         <span class="text">Tools</span>
                         <div class="menu">
                             <div class="item">
-                                <i class="users icon"></i>
+                                <i class="users icon" data-window-href="/settings/users"></i>
                                 Users
                             </div>
-                            <div class="item">
-                                <i class="terminal icon"></i>
-                                Terminal
+                            <div class="item" data-window-href="/settings/personalization">
+                                <i class="paint icon"></i>
+                                Desktop Personalization
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="item" data-settings="about">About Chloe OS</div>
+                    <div class="item" data-window-href="/settings/about" data-window-maximized>About Chloe OS</div>
                 </div>
             </div>
             <aside id="tray-icons" class="right menu">
@@ -87,7 +87,7 @@
             </aside>
         </nav>
     </header>
-    <main role="main" id="desktop" class="wallpaper" ondblclick="event.preventDefault()">
+    <main role="main" id="desktop" class="wallpaper">
         @RenderBody()
     </main>
 </body>

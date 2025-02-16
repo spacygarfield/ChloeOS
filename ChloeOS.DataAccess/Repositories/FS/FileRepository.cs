@@ -15,7 +15,7 @@ public class FileRepository : IFileRepository {
     public async Task<IResult<File[]>> GetAllFromRootAsync() {
         try {
             File[] files = await _fs.Files
-                .Where(f => !f.FolderId.HasValue)
+                .Where(f => !f.DirectoryId.HasValue)
                 .ToArrayAsync();
 
             return Result.Success(files);
@@ -26,10 +26,10 @@ public class FileRepository : IFileRepository {
         }
     }
 
-    public async Task<IResult<File[]>> GetAllFromFolderAsync(Guid? parentFolderId) {
+    public async Task<IResult<File[]>> GetAllFromDirectoryAsync(Guid? parentDirectoryId) {
         try {
             File[] files = await _fs.Files
-                .Where(f => f.FolderId == parentFolderId)
+                .Where(f => f.DirectoryId == parentDirectoryId)
                 .ToArrayAsync();
 
             if (files.Length == 0) {

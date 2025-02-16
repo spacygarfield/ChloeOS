@@ -6,7 +6,7 @@ namespace ChloeOS.Core.Contracts.DataAccess.OS;
 public interface IFileRepository {
 
     Task<IResult<File[]>> GetAllFromRootAsync();
-    Task<IResult<File[]>> GetAllFromFolderAsync(Guid? parentFolderId);
+    Task<IResult<File[]>> GetAllFromDirectoryAsync(Guid? parentDirectoryId);
     Task<IResult<File>> GetByIdAsync(Guid fileId);
     Task<IResult<File>> CreateAsync(File file);
     Task<IResult<File>> UpdateAsync(File file);

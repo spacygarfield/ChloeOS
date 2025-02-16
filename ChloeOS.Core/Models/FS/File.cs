@@ -10,8 +10,8 @@ public class File {
     [Key]
     public Guid Id { get; set; } = Guid.NewGuid();
 
-    [ForeignKey(nameof(Folder))]
-    public Guid? FolderId { get; set; } = null!;
+    [ForeignKey(nameof(Directory))]
+    public Guid? DirectoryId { get; set; } = null!;
 
     [ForeignKey(nameof(User))]
     public Guid OwnerId { get; set; }
@@ -44,7 +44,7 @@ public class File {
     [DefaultValue(false)]
     public bool IsHidden { get; set; }
 
-    public virtual Folder Parent { get; set; } = null!;
+    public virtual Directory Parent { get; set; } = null!;
     public virtual User Owner { get; set; } = null!;
 
 }

@@ -1,4 +1,4 @@
-﻿@model DesktopContent
+﻿@model BrowsableContent
 
 <aside id="welcome" class="wallpaper">
     <div>
@@ -7,7 +7,7 @@
     </div>
 </aside>
 
-@foreach (Folder folder in Model.Folders) {
+@foreach (Directory folder in Model.Folders) {
     <partial name="_Folder" model="@folder" />
 }
 
