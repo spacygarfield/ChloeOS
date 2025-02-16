@@ -71,6 +71,7 @@ body {
     justify-content: center;
     align-items: center;
 
+
     .file, .folder {
         width: 100%;
         aspect-ratio: 1;
@@ -78,6 +79,7 @@ body {
         display: flex;
         flex-direction: column;
         text-align: center;
+        user-select: none;
 
         & > .icon {
             flex: 1;
@@ -89,6 +91,11 @@ body {
         & > small {
             display: inline-flex;
             justify-content: center;
+        }
+
+        &.dragged {
+            position: absolute;
+            z-index: var(--layer-select);
         }
     }
 
@@ -194,7 +201,6 @@ body {
 .window {
     position: absolute;
     z-index: var(--layer-win);
-    resize: both;
     direction: ltr;
     min-width: calc(var(--win-min-width) * 1px);
     min-height: calc(var(--win-min-width) * 1px);

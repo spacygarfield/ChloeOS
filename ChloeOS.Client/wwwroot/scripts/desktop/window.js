@@ -2,13 +2,38 @@
     .on(`mousemove`, dragWindow)
     .mouseup(dragEndWindow);
 
+$(`[data-window-click]`).click(createWindow);
+$(`[data-window-dblclick]`).on(`dblclick`, createWindow);
+
 const windowTemplate = $(`#window-template`)[0];
 
-function openWindow(uri) {
+function createWindow(e) {
+    const $clickedElement = $(e.currentTarget);
+
+    let $window = $(windowTemplate.content.firstElementChild.cloneNode(true));
+
+    // Set custom Window settings.
+    setWindowSettings($window, {
+        width: !Number.isNaN($clickedElement.data(`window-width`))
+            ? $clickedElement.data(`window-width`)
+            : $(document.documentElement).css(`--win-init-width`),
+        height: !Number.isNaN($clickedElement.data(`window-height`))
+            ? $clickedElement.data(`window-height`)
+            : $(document.documentElement).css(`--win-init-height`),
+        maximized: $clickedElement.data(`window-maximized`) !== undefined,
+        resizable: $clickedElement.data(`window-resizable`),
+        minimizable: $clickedElement.data(`window-minimizable`),
+        maximizable: $clickedElement.data(`window-maximizable`),
+        confirmOnExit: $clickedElement.data(`window-confirm-exit`) !== undefined,
+    });
+
+    openWindow($window, $clickedElement.data(`window-href`));
+}
+
+function openWindow($window, uri) {
     if (!isRouteAvailable(uri)) {
         uri = `/error/404`;
     }
-    uri = `/`;
 
     // Encode query parameters.
     const [href, queryParams] = uri.split(`?`);
@@ -16,46 +41,38 @@ function openWindow(uri) {
         uri = href + window.encodeURIComponent(queryParams);
     }
 
-    // Create window.
-    let $window = $(windowTemplate.content.cloneNode(true));
     let $iframe = $window.find(`iframe`);
-    $iframe.attr(`src`, uri);
+    $iframe.attr({ 'src': uri, 'referrerpolicy': `same-origin` });
 
-    // Add onto the desktop!
     $desktopArea.append($window);
-
-    $window = $desktopArea.find(`.window`);
-    $window
-        .css(`width`, $(document.documentElement).css(`--win-init-width`))
-        .css(`height`, $(document.documentElement).css(`--win-init-height`))
-
-    $iframe = $window.find(`iframe`);
-    $iframe
-        .attr(`src`, uri)
-        .attr(`referrerpolicy`, `same-origin`);
 
     // Verify that the page was loaded successfully.
     // Needs to have at least something in the body.
-    // if ($iframe[0].contentWindow.location.href === `about:blank`) {
-    //     $iframe.attr(`src`, `/error/404`);
-    // }
+    if ($iframe[0].contentWindow.location.href === `about:blank`) {
+        $iframe.attr(`src`, `/error/404`);
+    }
 }
 
 function closeWindow($window) {
-    $window.remove();
+    if (Boolean($window.data(`confirm-exit`))) {
+        const ok = window.confirm(`Are you sure you want to close this window?`);
+        if (ok) {
+            $window.remove();
+        }
+    } else {
+        $window.remove();
+    }
 }
 
 let $draggedWindow;
-let draggedX;
-let draggedY;
 
 function dragStartWindow(e) {
-    console.log(`Drag start.`);
     $draggedWindow = $(e.currentTarget);
+    $draggedWindow.css(`z-index`, 10);
 
     const rect = e.currentTarget.getBoundingClientRect();
-    draggedX = e.clientX - rect.left;
-    draggedY = e.clientY - rect.top;
+    $draggedWindow.x = e.clientX - rect.left;
+    $draggedWindow.y = e.clientY - rect.top;
 }
 
 function dragWindow(e) {
@@ -63,12 +80,9 @@ function dragWindow(e) {
         return;
     }
 
-    console.log(`Dragging...`);
-    console.log(e.clientX, e.clientY);
-
     $draggedWindow.css({
-        'top': `${e.clientY - draggedY}px`,
-        'left': `${e.clientX - draggedX}px`,
+        'top': e.clientY - $draggedWindow.y,
+        'left': e.clientX - $draggedWindow.x,
     });
 }
 
@@ -77,10 +91,8 @@ function dragEndWindow() {
         return;
     }
 
-    console.log(`Drag stopped.`);
+    $draggedWindow.css(`z-index`, +$($draggedWindow.css(`z-index`)) - 1);
     $draggedWindow = undefined;
-    draggedX = undefined;
-    draggedY = undefined;
 }
 
 function isRouteAvailable(uri) {
@@ -89,4 +101,43 @@ function isRouteAvailable(uri) {
     }).fail(function() {
         return false;
     });
+}
+
+function setWindowSettings($window, {
+    width = $window.css(`--win-init-width`),
+    height = $window.css(`--win-init-height`),
+    maximized = false,
+    resizable = false,
+    minimizable = true,
+    maximizable = true,
+    confirmOnExit = false
+}) {
+    // Check for all the settings.
+    $window.css({ width, height });
+
+    if (maximized) {
+        const $desktop = $(`#desktop`);
+        $window.css({
+            'width': $desktop.css(`width`),
+            'height': $desktop.css(`height`),
+            'top': 0,
+            'left': 0
+        });
+    }
+
+    if (resizable) {
+        $window.css(`resizable`, `both`);
+    }
+
+    if (!minimizable) {
+        $window.find(`.minimize`).prop(`disabled`, true);
+    }
+
+    if (!maximizable) {
+        $window.find(`.maximize`).prop(`disabled`, true);
+    }
+
+    if (confirmOnExit) {
+        $window.data(`confirm-exit`, true);
+    }
 }
