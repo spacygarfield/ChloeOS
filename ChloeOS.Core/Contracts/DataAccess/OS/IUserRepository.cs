@@ -1,13 +1,13 @@
-﻿using ChloeOS.Core.Models.OS;
-using Jane;
+﻿using Ardalis.Result;
+using ChloeOS.Core.Models.OS;
 
 namespace ChloeOS.Core.Contracts.DataAccess.OS;
 
 public interface IUserRepository {
 
-    Task<IResult<User[]>> GetAllAsync();
-    Task<IResult<User>> GetByUsernameAsync(string username);
-    Task<IResult<User>> CreateAsync(User user);
-    Task<IResult<User>> UpdateAsync(User user);
+    Task<Result<User[]>> GetAllAsync();
+    Task<Result<User>> GetByUsernameAsync(string username);
+    Task<Result<User>> CreateAsync(User user);
+    Task<Result<User>> UpdateAsync(User user);
 
 }

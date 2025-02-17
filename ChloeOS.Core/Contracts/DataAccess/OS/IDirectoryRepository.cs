@@ -1,16 +1,17 @@
-﻿using Jane;
+﻿using Ardalis.Result;
 using Directory = ChloeOS.Core.Models.FS.Directory;
 
 namespace ChloeOS.Core.Contracts.DataAccess.OS;
 
 public interface IDirectoryRepository {
 
-    Task<IResult<Directory[]>> GetAllFromRootAsync();
-    Task<IResult<Directory[]>> GetAllFromParentAsync(Guid parentFolderId);
-    Task<IResult<Directory>> GetByIdAsync(Guid folderId);
-    Task<IResult<Directory>> GetFromSubFileAsync(Guid subFileId);
-    Task<IResult<Directory>> CreateAsync(Directory directory);
-    Task<IResult<Directory>> UpdateAsync(Directory directory);
-    Task<IResult> DeleteAsync(Guid folderId);
+    Task<Result<Directory[]>> GetAllFromRootAsync();
+    Task<Result<Directory[]>> GetAllFromParentAsync(Guid parentDirectoryId);
+    Task<Result<Directory>> GetByIdAsync(Guid directoryId);
+    Task<Result<Directory[]>> GetByNameAsync(string directoryName, Guid? parentDirectoryId = null);
+    Task<Result<Directory>> GetFromSubFileAsync(Guid subFileId);
+    Task<Result<Directory>> CreateAsync(Directory directory);
+    Task<Result<Directory>> UpdateAsync(Directory directory);
+    Task<Result> DeleteAsync(Guid directoryId);
 
 }

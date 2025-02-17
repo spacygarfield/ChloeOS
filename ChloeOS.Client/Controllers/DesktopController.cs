@@ -1,8 +1,8 @@
+using Ardalis.Result;
 using System.Security.Claims;
 using ChloeOS.Client.Models;
 using ChloeOS.Core.Contracts.DataAccess.OS;
 using ChloeOS.Core.Models.FS;
-using Jane;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Directory = ChloeOS.Core.Models.FS.Directory;
@@ -22,15 +22,10 @@ public class DesktopController : Controller {
 
     [HttpGet]
     public async Task<IActionResult> Index() {
-        IResult<Directory[]> getRootFoldersResult = await _directoryRepository.GetAllFromRootAsync();
-        if (!getRootFoldersResult.Ok) {
-            return StatusCode(StatusCodes.Status500InternalServerError, getRootFoldersResult.Reason);
-        }
+        Directory? desktopDirectory;
 
-        Directory? desktopDirectory = getRootFoldersResult.Value.FirstOrDefault(
-            f => string.Equals(f.Name, "Desktop", StringComparison.CurrentCultureIgnoreCase)
-        );
-        if (desktopDirectory == null) {
+        Result<Directory[]> getDesktopDirectoryResult = await _directoryRepository.GetByNameAsync("Desktop");
+        if (getDesktopDirectoryResult.IsNotFound()) {
             if (!Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out Guid ownerId)) {
                 return StatusCode(
                     StatusCodes.Status500InternalServerError,
@@ -44,12 +39,14 @@ public class DesktopController : Controller {
             };
 
             // Attempt to create the folder.
-            IResult<Directory> createDesktopDirectoryResult = await _directoryRepository.CreateAsync(desktopDirectory);
-            if (!createDesktopDirectoryResult.Ok) {
-                return StatusCode(StatusCodes.Status500InternalServerError, createDesktopDirectoryResult.Reason);
+            Result<Directory> createDesktopDirectoryResult = await _directoryRepository.CreateAsync(desktopDirectory);
+            if (!createDesktopDirectoryResult.IsSuccess) {
+                return StatusCode(StatusCodes.Status500InternalServerError, createDesktopDirectoryResult.Errors);
             }
 
             desktopDirectory = createDesktopDirectoryResult.Value;
+        } else {
+            desktopDirectory = getDesktopDirectoryResult.Value.First(d => d.Name == "Desktop");
         }
 
         // Get files from the "Desktop" folder.

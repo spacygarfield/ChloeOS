@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using ChloeOS.Core.Contracts.DataAccess.OS;
 using ChloeOS.DataAccess.Contexts;
 using ChloeOS.DataAccess.Repositories.FS;
@@ -10,7 +11,9 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 #region Services
 
 // MVC.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddJsonOptions(options => {
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;;
+});
 builder.Services.AddAntiforgery(options => {
     options.HeaderName = "X-CSRF";
     options.SuppressXFrameOptionsHeader = true;

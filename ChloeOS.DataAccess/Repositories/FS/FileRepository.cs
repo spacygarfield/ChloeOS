@@ -1,6 +1,6 @@
-﻿using ChloeOS.Core.Contracts.DataAccess.OS;
+﻿using Ardalis.Result;
+using ChloeOS.Core.Contracts.DataAccess.OS;
 using ChloeOS.DataAccess.Contexts;
-using Jane;
 using Microsoft.EntityFrameworkCore;
 using File = ChloeOS.Core.Models.FS.File;
 
@@ -12,7 +12,7 @@ public class FileRepository : IFileRepository {
 
     public FileRepository(FileSystemContext fs) => _fs = fs;
 
-    public async Task<IResult<File[]>> GetAllFromRootAsync() {
+    public async Task<Result<File[]>> GetAllFromRootAsync() {
         try {
             File[] files = await _fs.Files
                 .Where(f => !f.DirectoryId.HasValue)
@@ -20,45 +20,60 @@ public class FileRepository : IFileRepository {
 
             return Result.Success(files);
         } catch {
-            return Result.Failure<File[]>(
-                "Unable to retrieve folders from the root. Please try again later."
-            );
+            return Result.Unavailable("Unable to retrieve folders from the root. Please try again later.");
         }
     }
 
-    public async Task<IResult<File[]>> GetAllFromDirectoryAsync(Guid? parentDirectoryId) {
+    public async Task<Result<File[]>> GetAllFromDirectoryAsync(Guid? parentDirectoryId) {
         try {
             File[] files = await _fs.Files
                 .Where(f => f.DirectoryId == parentDirectoryId)
                 .ToArrayAsync();
 
             if (files.Length == 0) {
-                return Result.Failure<File[]>("This folder contains no files.");
+                return Result.NotFound("This folder contains no files.");
             }
 
             return Result.Success(files);
         } catch {
-            return Result.Failure<File[]>(
-                "Unable to retrieve files within the requested folder. Please try again later."
-            );
+            return Result.Unavailable("Unable to retrieve files within the requested folder. Please try again later.");
         }
     }
 
-    public async Task<IResult<File>> GetByIdAsync(Guid fileId) {
+    public async Task<Result<File>> GetByIdAsync(Guid fileId) {
         try {
-            File? file = await _fs.Files.FindAsync(fileId);
+            File? file = await _fs.Files
+                .Include(f => f.Parent)
+                .FirstOrDefaultAsync(f => f.Id == fileId);
 
             if (file == null) {
-                throw new Exception();
+                return Result.NotFound("The requested file was not found.");
             }
 
             return Result.Success(file);
         } catch {
-            return Result.Failure<File>("Unable to retrieve the requested file. Please try again later.");
+            return Result.Unavailable("Unable to retrieve the requested file. Please try again later.");
         }
     }
 
-    public async Task<IResult<File>> CreateAsync(File file) {
+    public async Task<Result<File[]>> GetByNameAsync(string fileName, Guid? directoryId = null) {
+        try {
+            File[] files = await _fs.Files
+                .Include(f => f.Parent)
+                .Where(f => EF.Functions.Like(f.Name, fileName) && f.DirectoryId == directoryId)
+                .ToArrayAsync();
+
+            if (files.Length == 0) {
+                return Result.NotFound($"""No files match the name "{fileName}".""");
+            }
+
+            return Result.Success(files);
+        } catch {
+            return Result.Unavailable("Unable to retrieve the requested file. Please try again later.");
+        }
+    }
+
+    public async Task<Result<File>> CreateAsync(File file) {
         try {
             await _fs.Files.AddAsync(file);
 
@@ -67,13 +82,13 @@ public class FileRepository : IFileRepository {
                 throw new Exception();
             }
         } catch {
-            return Result.Failure<File>("Unable to create this file at the moment. Please try again later.");
+            return Result.Error("Unable to create this file at the moment. Please try again later.");
         }
 
         return Result.Success(file);
     }
 
-    public async Task<IResult<File>> UpdateAsync(File file) {
+    public async Task<Result<File>> UpdateAsync(File file) {
         try {
             _fs.Files.Update(file);
 
@@ -82,13 +97,13 @@ public class FileRepository : IFileRepository {
                 throw new Exception();
             }
         } catch {
-            return Result.Failure<File>("Unable to update this file at the moment. Please try again later.");
+            return Result.Error("Unable to update this file at the moment. Please try again later.");
         }
 
         return Result.Success(file);
     }
 
-    public async Task<IResult> DeleteAsync(Guid fileId) {
+    public async Task<Result> DeleteAsync(Guid fileId) {
         try {
             int savedCount = await _fs.Files
                 .Where(f => f.Id == fileId)
@@ -97,7 +112,7 @@ public class FileRepository : IFileRepository {
                 throw new Exception();
             }
         } catch {
-            return Result.Failure("Unable to delete this file at the moment. Please try again later.");
+            return Result.Error("Unable to delete this file at the moment. Please try again later.");
         }
 
         return Result.Success();

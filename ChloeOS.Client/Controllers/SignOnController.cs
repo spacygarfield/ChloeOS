@@ -1,11 +1,11 @@
-﻿using System.Security.Claims;
+﻿using Ardalis.Result;
+using System.Security.Claims;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using ChloeOS.Client.Models;
 using ChloeOS.Core.Contracts.DataAccess.OS;
 using ChloeOS.Core.Models.Misc;
 using ChloeOS.Core.Models.OS;
-using Jane;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -24,9 +24,9 @@ public class SignOnController : Controller {
 
     [HttpGet]
     public async Task<IActionResult> Index() {
-        IResult<User[]> getUsersResult = await _localUserRepository.GetAllAsync();
-        if (!getUsersResult.Ok) {
-            return StatusCode(StatusCodes.Status500InternalServerError, getUsersResult.Reason);
+        Result<User[]> getUsersResult = await _localUserRepository.GetAllAsync();
+        if (getUsersResult.IsUnavailable()) {
+            return StatusCode(StatusCodes.Status503ServiceUnavailable, getUsersResult.Errors);
         }
         User[] users = getUsersResult.Value;
 
@@ -38,9 +38,9 @@ public class SignOnController : Controller {
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Index(SignInCredentials credentials) {
-        IResult<User[]> getUsersResult = await _localUserRepository.GetAllAsync();
-        if (!getUsersResult.Ok) {
-            return StatusCode(StatusCodes.Status500InternalServerError, getUsersResult.Reason);
+        Result<User[]> getUsersResult = await _localUserRepository.GetAllAsync();
+        if (getUsersResult.IsUnavailable()) {
+            return StatusCode(StatusCodes.Status503ServiceUnavailable, getUsersResult.Errors);
         }
         User[] users = getUsersResult.Value;
 
@@ -52,9 +52,9 @@ public class SignOnController : Controller {
         }
 
         // Get requested user.
-        IResult<User> getUserResult = await _localUserRepository.GetByUsernameAsync(credentials.Username.Trim());
-        if (!getUserResult.Ok) {
-            ModelState.AddModelError(string.Empty, getUserResult.Reason);
+        Result<User> getUserResult = await _localUserRepository.GetByUsernameAsync(credentials.Username.Trim());
+        if (getUserResult.IsNotFound()) {
+            ModelState.AddModelError(string.Empty, getUserResult.Errors.First());
             return View(credentials);
         }
 
@@ -89,9 +89,9 @@ public class SignOnController : Controller {
         }
 
         // Get requested user.
-        IResult<User> getUserResult = await _localUserRepository.GetByUsernameAsync(credentials.Username.Trim());
-        if (!getUserResult.Ok) {
-            ModelState.AddModelError(string.Empty, getUserResult.Reason);
+        Result<User> getUserResult = await _localUserRepository.GetByUsernameAsync(credentials.Username.Trim());
+        if (getUserResult.IsNotFound()) {
+            ModelState.AddModelError(string.Empty, getUserResult.Errors.First());
             return View(credentials);
         }
         User user = getUserResult.Value;
