@@ -1,11 +1,11 @@
 ﻿@model File
 
-<div class="file" data-id="@Model.Id" data-window-dblclick="/fs/file/@Model.Id">
+<div class="file" data-id="@Model.Id" data-window-dblclick data-window-href="/fs/file/@Model.Id">
     <i class="file icon"></i>
-    <small>
+    <p data-window-prevent>
         <span>@Model.Name</span>
         @if (!string.IsNullOrEmpty(Model.FileExtension)) {
             <span>.@Model.FileExtension</span>
         }
-    </small>
+    </p>
 </div>

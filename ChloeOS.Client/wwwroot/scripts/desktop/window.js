@@ -5,12 +5,15 @@
 $(`[data-window-click]`).click(createWindow);
 $(`[data-window-dblclick]`).on(`dblclick`, createWindow);
 
-const windowTemplate = $(`#window-template`)[0];
+const $windowTemplate = $(`#window-template`);
 
 function createWindow(e) {
-    const $clickedElement = $(e.currentTarget);
+    const $clickedElement = $(e.target);
+    if ($clickedElement.data(`window-prevent`) !== undefined) {
+        return;
+    }
 
-    let $window = $(windowTemplate.content.firstElementChild.cloneNode(true));
+    const $window = $($windowTemplate.clone()[0].content.firstElementChild);
 
     // Set custom Window settings.
     setWindowSettings($window, {
@@ -20,7 +23,7 @@ function createWindow(e) {
         height: !Number.isNaN($clickedElement.data(`window-height`))
             ? $clickedElement.data(`window-height`)
             : $(document.documentElement).css(`--win-init-height`),
-        maximized: $clickedElement.data(`window-maximized`) !== undefined,
+        maximized: $clickedElement.data(`data-window-maximized`) !== undefined,
         resizable: $clickedElement.data(`window-resizable`),
         minimizable: $clickedElement.data(`window-minimizable`),
         maximizable: $clickedElement.data(`window-maximizable`),
@@ -36,6 +39,7 @@ function openWindow($window, uri) {
     }
 
     // Encode query parameters.
+    console.log(uri)
     const [href, queryParams] = uri.split(`?`);
     if (queryParams) {
         uri = href + window.encodeURIComponent(queryParams);

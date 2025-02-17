@@ -1,6 +1,6 @@
 ﻿@model Directory
 
-<div class="folder" data-id="@Model.Id" data-window-dblclick="/fs/dir/@Model.Id">
+<div class="folder" data-id="@Model.Id" data-window-dblclick data-window-href="/fs/dir/@Model.Id">
     <i class="folder icon"></i>
-    <small>@Model.Name</small>
+    <p data-window-prevent>@Model.Name</p>
 </div>
